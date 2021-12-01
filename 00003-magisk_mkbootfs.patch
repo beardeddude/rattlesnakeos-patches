@@ -1,17 +1,18 @@
-# By CaseyBakey (https://github.com/CaseyBakey/chaosp/blob/master/mkbootfs.patch)
---- a/system/core/cpio/mkbootfs.c
-+++ b/system/core/cpio/mkbootfs.c
-@@ -179,9 +179,13 @@ static void _archive_dir(char *in, char *out, int ilen, int olen)
+--- a/system/core/mkbootfs/mkbootfs.c	2021-12-01 13:31:48.168006494 -0700
++++ b/system/core/mkbootfs/mkbootfs.c	2021-12-01 13:35:39.351859566 -0700
+@@ -180,9 +180,15 @@
      }
  
      while((de = readdir(d)) != 0){
++
 +        if(strcmp(de->d_name, ".backup") == 0 || strcmp(de->d_name, ".magisk") == 0)
 +            goto let_magisk;
 +
              /* xxx: feature? maybe some dotfiles are okay */
          if(de->d_name[0] == '.') continue;
  
-+let_magisk:
++        let_magisk:
++
              /* xxx: hack. use a real exclude list */
          if(!strcmp(de->d_name, "root")) continue;
  
